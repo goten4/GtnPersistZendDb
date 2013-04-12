@@ -1,14 +1,17 @@
 <?php
 namespace ZfPersistenceZendDb\Infrastructure;
 
+use ZfPersistenceZendDb\Db\Adapter\MasterSlavesAdapterInterface;
 use ZfPersistenceBase\Model\Entity;
 use ZfPersistenceBase\Model\Repository;
 
 class ZendDbRepository implements Repository
 {
-    public function __construct()
+    protected $dbAdapter;
+    
+    public function __construct(MasterSlavesAdapterInterface $dbAdapter)
     {
-        
+        $this->dbAdapter = $dbAdapter;
     }
     
     /**
