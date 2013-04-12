@@ -6,6 +6,19 @@ use ZfPersistenceBase\Model\Repository;
 
 class ZendDbRepository implements Repository
 {
+    public function __construct()
+    {
+        
+    }
+    
+    /**
+     * @return Adapter
+     */
+    public function getDbAdapter()
+    {
+        return $this->dbAdapter;
+    }
+    
     public function add(Entity $entity)
     {
     }
