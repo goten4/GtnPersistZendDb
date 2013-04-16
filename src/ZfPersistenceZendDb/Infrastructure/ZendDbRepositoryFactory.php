@@ -7,6 +7,6 @@ class ZendDbRepositoryFactory implements FactoryInterface
 {
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return new ZendDbRepository();
+        return new ZendDbRepository($serviceLocator->get('zfpersistence.db.adapter'));
     }
 }
