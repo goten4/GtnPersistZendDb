@@ -1,8 +1,9 @@
 <?php
 namespace ZfPersistenceZendDb\Db\Adapter;
 
-use Zend\Db\Adapter\Adapter;
+use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\ServiceManager\FactoryInterface;
+use Zend\Db\Adapter\Adapter;
 
 class MasterSlavesAdapterFactory implements FactoryInterface
 {
