@@ -27,8 +27,8 @@ class Module implements AutoloaderProviderInterface, ServiceProviderInterface
     {
         return array(
             'factories' => array(
-                'zfpersistence.db.adapter' => 'ZfPersistenceZendDb\Db\Adapter\MasterSlavesAdapterFactory',
-                'zfpersistence.repository' => 'ZfPersistenceZendDb\Infrastructure\ZendDbRepositoryFactory'
+                'Zend\Db\Adapter' => 'ZfPersistenceZendDb\Db\Adapter\MasterSlavesAdapterFactory',
+                'ZfPersistence\Repository' => 'ZfPersistenceZendDb\Infrastructure\ZendDbRepositoryFactory'
             )
         );
     }

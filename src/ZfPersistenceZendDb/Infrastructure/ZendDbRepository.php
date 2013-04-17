@@ -2,7 +2,7 @@
 namespace ZfPersistenceZendDb\Infrastructure;
 
 use ZfPersistenceZendDb\Db\Adapter\MasterSlavesAdapterInterface;
-use ZfPersistenceBase\Model\Entity;
+use ZfPersistenceBase\Model\AggregateRoot;
 use ZfPersistenceBase\Model\Repository;
 
 class ZendDbRepository implements Repository
@@ -22,7 +22,7 @@ class ZendDbRepository implements Repository
         return $this->dbAdapter;
     }
     
-    public function add(Entity $entity)
+    public function add(AggregateRoot $aggregateRoot)
     {
     }
 
@@ -38,15 +38,15 @@ class ZendDbRepository implements Repository
     {
     }
 
-    public function update(Entity $entity)
+    public function update(AggregateRoot $aggregateRoot)
     {
     }
 
-    public function remove(Entity $entity)
+    public function remove(AggregateRoot $aggregateRoot)
     {
     }
 
-    public function removeAll(array $entities = NULL)
+    public function removeAll(array $aggregateRoots = NULL)
     {
     }
 }
