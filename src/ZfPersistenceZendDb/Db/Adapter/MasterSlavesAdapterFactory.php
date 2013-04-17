@@ -11,8 +11,10 @@ class MasterSlavesAdapterFactory implements FactoryInterface
     {
         $config = $serviceLocator->get('Config');
         $adapter = new MasterSlavesAdapter($config['db']['master']);
-        foreach ($config['db']['slaves'] as $slaveConfig) {
-            $adapter->addSlaveAdapter(new Adapter($slaveConfig));
+        if (array_key_exists('slaves', $config['db'])) {
+            foreach ($config['db']['slaves'] as $slaveConfig) {
+                $adapter->addSlaveAdapter(new Adapter($slaveConfig));
+            }
         }
 		return $adapter;
     }

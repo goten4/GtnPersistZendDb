@@ -27,9 +27,12 @@ class Module implements AutoloaderProviderInterface, ServiceProviderInterface
     {
         return array(
             'factories' => array(
-                'Zend\Db\Adapter' => 'ZfPersistenceZendDb\Db\Adapter\MasterSlavesAdapterFactory',
-                'ZfPersistence\Repository' => 'ZfPersistenceZendDb\Infrastructure\ZendDbRepositoryFactory'
-            )
+                'Zend\Db\Adapter\Adapter' => 'ZfPersistenceZendDb\Db\Adapter\MasterSlavesAdapterFactory',
+                'ZfPersistence\Repository' => 'ZfPersistenceZendDb\Infrastructure\ZendDbRepositoryFactory',
+            ),
+            'invokables' => array(
+                'ZfPersistence\RandomGenerator' => 'Zend\Math\Rand',
+            ),
         );
     }
 }
