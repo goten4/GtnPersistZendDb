@@ -1,14 +1,19 @@
 <?php
-namespace ZfPersistenceBase;
+namespace ZfPersistenceZendDbTest;
 
-use Zend\Math\Rand;
+use ZfPersistenceZendDb\RandomGeneratorInterface;
 
-class FakeRandomGenerator extends AbstractRandomGenerator
+class FakeRandomGenerator implements RandomGeneratorInterface
 {
-    public static $value = 1;
+    private $value = 0;
     
-    protected function getInteger($min, $max, $strong = false)
+    public function __construct($value)
     {
-        return static::$value;
+        $this->value = $value;
+    }
+    
+    public function getInteger($min, $max, $strong = false)
+    {
+        return $this->value;
     }
 }

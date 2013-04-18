@@ -31,7 +31,7 @@ class Module implements AutoloaderProviderInterface, ServiceProviderInterface
                 'ZfPersistence\Repository' => 'ZfPersistenceZendDb\Infrastructure\ZendDbRepositoryFactory',
             ),
             'invokables' => array(
-                'ZfPersistence\RandomGenerator' => 'Zend\Math\Rand',
+                'ZfPersistence\RandomGenerator' => 'ZfPersistenceZendDb\ZendRandomGenerator',
             ),
         );
     }

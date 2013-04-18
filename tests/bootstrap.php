@@ -22,8 +22,3 @@ $loader->add('ZfPersistenceBaseTest\\', ZF_PERSISTENCE_BASE_PATH . '/tests');
 $loader->add('ZfPersistenceZendDb\\', dirname(__DIR__) . '/src');
 $loader->add('ZfPersistenceZendDbTest\\', __DIR__);
 unset($files, $file, $loader);
-
-if (!$config = @include __DIR__ . '/testing.config.php') {
-    throw new RuntimeException('missing testing configuration file : testing.config.php !');
-}
-ZfPersistenceZendDbTest\Bootstrap::init($config);
