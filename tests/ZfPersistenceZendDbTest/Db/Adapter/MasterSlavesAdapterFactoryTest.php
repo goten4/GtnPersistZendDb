@@ -26,6 +26,20 @@ class MasterSlavesAdapterFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function canCreateMasterSlaveAdapterWithoutSlavesAndWithoutMasterKeyInConfiguration()
+    {
+        $serviceManager = $this->createServiceManagerFromConfig(array(
+            'db' => $this->adapterConfig('master.local'), 
+            'service_manager' => $this->serviceManagerConfig()
+        ));
+        
+        $adapter = $this->factory->createService($serviceManager);
+        
+        $this->assertInstanceOf('ZfPersistenceZendDb\Db\Adapter\MasterSlavesAdapter', $adapter);
+        $this->assertSame($serviceManager, $adapter->getServiceManager());
+    }
+
+    /** @test */
     public function canCreateMasterSlaveAdapterWithSlaves()
     {
         $serviceManager = $this->createServiceManager('master.local', array('slave1.local', 'slave2.local'));
@@ -38,30 +52,40 @@ class MasterSlavesAdapterFactoryTest extends \PHPUnit_Framework_TestCase
     private function createServiceManager($master, array $slaves = array())
     {
         $config = $this->config($master, $slaves);
-		$serviceManager = new ServiceManager(new Config($config));
-		$serviceManager->setService('Config', $config);
-		return $serviceManager;
+        return $this->createServiceManagerFromConfig($config);
     }
-    
+
+    private function createServiceManagerFromConfig($config)
+    {
+        $serviceManager = new ServiceManager(new Config($config));
+        return $serviceManager->setService('Config', $config);
+    }
+
     private function config($master, array $slaves = array())
     {
         $config = array(
             'db' => array(
                 'master' => $this->adapterConfig($master)
-            ),
-            'service_manager' => array(
-                'factories' => array(
-                    'Zend\Db\Adapter\Adapter' => 'ZfPersistenceZendDb\Db\Adapter\MasterSlavesAdapterFactory'
-                ),
-                'invokables' => array(
-                    'ZfPersistence\RandomGenerator' => 'ZfPersistenceZendDb\ZendRandomGenerator'
-                ),
-            ),
+            ), 
+            'service_manager' => $this->serviceManagerConfig()
         );
         foreach ($slaves as $slave) {
             $config['db']['slaves'][] = $this->adapterConfig($slave);
         }
         return $config;
+    }
+
+    private function serviceManagerConfig()
+    {
+        $serviceManagerConfig = array(
+            'factories' => array(
+                'Zend\Db\Adapter\Adapter' => 'ZfPersistenceZendDb\Db\Adapter\MasterSlavesAdapterFactory'
+            ), 
+            'invokables' => array(
+                'ZfPersistence\RandomGenerator' => 'ZfPersistenceZendDb\ZendRandomGenerator'
+            )
+        );
+        return $serviceManagerConfig;
     }
 
     private function adapterConfig($hostname)
