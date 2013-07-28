@@ -1,6 +1,7 @@
 <?php
 namespace ZfPersistenceZendDbTest\Db\Adapter;
 
+use ZfPersistenceBaseTest\ServiceManagerFactory;
 use Zend\ServiceManager\Config;
 use Zend\ServiceManager\ServiceManager;
 use ZfPersistenceZendDb\Db\Adapter\MasterSlavesAdapterFactory;
@@ -11,7 +12,8 @@ class MasterSlavesAdapterFactoryTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->factory = new MasterSlavesAdapterFactory();
+        $serviceManager = ServiceManagerFactory::getServiceManager();
+        $this->factory = $serviceManager->get('ZfPersistenceZendDb\Db\Adapter\MasterSlavesAdapterFactory');
     }
 
     /** @test */
@@ -58,7 +60,7 @@ class MasterSlavesAdapterFactoryTest extends \PHPUnit_Framework_TestCase
     private function createServiceManagerFromConfig($config)
     {
         $serviceManager = new ServiceManager(new Config($config));
-        return $serviceManager->setService('Config', $config);
+        return $serviceManager->setService('ApplicationConfig', $config);
     }
 
     private function config($master, array $slaves = array())

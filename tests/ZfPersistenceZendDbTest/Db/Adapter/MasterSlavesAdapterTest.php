@@ -1,6 +1,8 @@
 <?php
 namespace ZfPersistenceZendDbTest\Db\Adapter;
 
+use ZfPersistenceBaseTest\ServiceManagerFactory;
+
 use Zend\ServiceManager\Config;
 use Zend\ServiceManager\ServiceManager;
 use Zend\Db\Adapter\Adapter;
@@ -10,6 +12,11 @@ use ZfPersistenceZendDbTest\FakeRandomGenerator;
 
 class MasterSlavesAdapterTest extends \PHPUnit_Framework_TestCase
 {
+    public function setUp()
+    {
+        ServiceManagerFactory::getServiceManager();
+    }
+    
     /** @test */
     public function canGetMasterAdapterWhenNoSlaves()
     {

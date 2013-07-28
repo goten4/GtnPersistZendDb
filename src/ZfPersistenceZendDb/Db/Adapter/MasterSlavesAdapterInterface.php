@@ -1,7 +1,6 @@
 <?php
 namespace ZfPersistenceZendDb\Db\Adapter;
 
-use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Db\Adapter\Adapter;
 
 interface MasterSlavesAdapterInterface

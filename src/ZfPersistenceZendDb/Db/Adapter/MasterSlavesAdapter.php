@@ -2,7 +2,6 @@
 namespace ZfPersistenceZendDb\Db\Adapter;
 
 use Zend\ServiceManager\ServiceLocatorInterface;
-
 use Zend\Db\Adapter\Adapter;
 
 class MasterSlavesAdapter extends Adapter implements MasterSlavesAdapterInterface
@@ -45,7 +44,8 @@ class MasterSlavesAdapter extends Adapter implements MasterSlavesAdapterInterfac
         if ($slaveAdaptersCount == 0) {
             return $this;
         }
-        return $this->slaveAdapters[$this->getServiceManager()->get('ZfPersistence\RandomGenerator')->getInteger(0, $slaveAdaptersCount-1)];
+        $randomIndex = $this->getServiceManager()->get('ZfPersistence\RandomGenerator')->getInteger(0, $slaveAdaptersCount-1);
+		return $this->slaveAdapters[$randomIndex];
     }
 
     /**

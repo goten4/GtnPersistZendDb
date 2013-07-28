@@ -1,0 +1,27 @@
+<?php
+return array(
+    'modules' => array(
+    	'ZfPersistenceBase',
+        'ZfPersistenceZendDb',
+    ),
+    'module_listener_options' => array(
+        'module_paths' => array(
+        	'ZfPersistenceBase' => realpath(__DIR__ . '/../../ZfPersistenceBase'),
+        ),
+    ),
+    'service_manager' => array(
+        'factories' => array(
+            'ZfPersistence\UserRepository' => 'ZfPersistenceZendDbTest\Infrastructure\ZendDbUserRepositoryFactory',
+        ),
+        'invokables' => array(
+            'ZfPersistenceZendDb\Infrastructure\ZendDbRepositoryFactory' => 'ZfPersistenceZendDb\Infrastructure\ZendDbRepositoryFactory',
+            'ZfPersistenceZendDb\Db\Adapter\MasterSlavesAdapterFactory' => 'ZfPersistenceZendDb\Db\Adapter\MasterSlavesAdapterFactory',
+        ),
+    ),
+    'db' => array(
+        'master' => array(
+            'driver' => 'Pdo', 
+            'dsn' => 'sqlite::memory:',
+        ),
+    ), 
+);
