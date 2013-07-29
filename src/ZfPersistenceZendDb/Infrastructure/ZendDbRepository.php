@@ -1,8 +1,8 @@
 <?php
 namespace ZfPersistenceZendDb\Infrastructure;
 
-use Zend\Db\Adapter\Platform\Sqlite;
-
+use Zend\Db\Sql\PreparableSqlInterface;
+use Zend\Db\Sql\Select;
 use Zend\Db\Sql\Sql;
 use Zend\Db\Sql\Expression as SqlExpression;
 use Zend\Db\Adapter\Driver\ResultInterface;
@@ -18,35 +18,55 @@ abstract class ZendDbRepository implements Repository
     protected $dbAdapter;
     protected $masterSql;
     protected $slaveSql;
-
+    
     public function __construct(MasterSlavesAdapterInterface $dbAdapter)
     {
         $this->setDbAdapter($dbAdapter);
         $this->setMasterSql(new Sql($this->getDbAdapter()));
-        $this->setSlaveSql(new Sql($this->getDbAdapter()->getSlaveAdapter()));
+        $this->setSlaveSql(new Sql($this->getSlaveDbAdapter()));
     }
-
-    public function add(AggregateRoot $aggregateRoot)
+    
+    /**
+     * Provides the name of the table associated to the Repository.
+     * @return string
+     */
+    protected abstract function tableName();
+    
+    /**
+     * Provides the class name of the aggregate root associated to the Repository.
+     * @return string
+     */
+    protected abstract function aggregateRootClassName();
+    
+    /**
+     * Provides the table field name of the aggregate root's identifier.
+     * 'id' by default, override this method to change it.
+     * @return string
+     */
+    protected function id()
     {
-        $insert = $this->getMasterSql()->insert($this->tableName())->values($aggregateRoot->getArrayCopy());
-        $this->getMasterSql()->prepareStatementForSqlObject($insert)->execute();
+        return 'id';
     }
-
-    public function getAll()
+    
+    /**
+     * Provides the hydrator that will be used to convert SQL rows to Aggregate Roots and vice versa.
+     * Zend\Stdlib\Hydrator\ArraySerializable by default, override this method to change it.
+     * @return Zend\Stdlib\Hydrator\HydratorInterface
+     */
+    protected function hydrator()
     {
-        return $this->executeSelect($this->getSelect());
+        return new ArraySerializable();
     }
 
     public function size()
     {
         $resultSet = new ResultSet();
-        $select = $this->getSelect()->columns(array(
+        $resultSet->initialize($this->performRead($this->getSelect()->columns(array(
             'size' => new SqlExpression('COUNT(*)')
-        ));
-        $resultSet->initialize($this->getSlaveSql()->prepareStatementForSqlObject($select)->execute());
+        ))));
         return $resultSet->current()->size;
     }
-
+    
     public function getById($id)
     {
         return $this->getBy(array(
@@ -54,37 +74,53 @@ abstract class ZendDbRepository implements Repository
         ));
     }
 
+    public function getAll()
+    {
+        return $this->hydrateAggregateRootsFromResult($this->performRead($this->getSelect()));
+    }
+    
+    public function add(AggregateRoot $aggregateRoot)
+    {
+        $data = $this->hydrator()->extract($aggregateRoot);
+        $insert = $this->getMasterSql()->insert($this->tableName())->values($data);
+        $this->performWrite($insert);
+    }
+
     public function update(AggregateRoot $aggregateRoot)
     {
-        $update = $this->getMasterSql()->update($this->tableName())->set($aggregateRoot->getArrayCopy())->where(
-            array(
-                $this->id() => $aggregateRoot->getId()
-            ));
-        $this->getMasterSql()->prepareStatementForSqlObject($update)->execute();
+        $update = $this->getMasterSql()->update($this->tableName())->set($aggregateRoot->getArrayCopy());
+        $update->where(array(
+            $this->id() => $aggregateRoot->getId()
+        ));
+        $this->performWrite($update);
     }
 
     public function remove(AggregateRoot $aggregateRoot)
     {
-        $delete = $this->getMasterSql()->delete($this->tableName())->where(
-            array(
-                $this->id() => $aggregateRoot->getId()
-            ));
-        $this->getMasterSql()->prepareStatementForSqlObject($delete)->execute();
+        $delete = $this->getMasterSql()->delete($this->tableName());
+        $delete->where(array(
+            $this->id() => $aggregateRoot->getId()
+        ));
+        $this->performWrite($delete);
     }
 
     public function removeAll(array $aggregateRoots = NULL)
     {
         $delete = $this->getMasterSql()->delete($this->tableName());
         if ($aggregateRoots) {
-            $ids = array_map(function (AggregateRoot $aggregateRoot) { return $aggregateRoot->getId(); }, $aggregateRoots);
+            $ids = array_map(function (AggregateRoot $aggregateRoot)
+            {
+                return $aggregateRoot->getId();
+            }, $aggregateRoots);
             $delete->where->in($this->id(), $ids);
         }
-        $this->getMasterSql()->prepareStatementForSqlObject($delete)->execute();
+        $this->performWrite($delete);
     }
 
     protected function getAllBy($criteria)
     {
-        return $this->executeSelect($this->getSelect()->where($criteria));
+        $select = $this->getSelect()->where($criteria);
+		return $this->hydrateAggregateRootsFromResult($this->performRead($select));
     }
 
     protected function getBy($criteria)
@@ -98,12 +134,20 @@ abstract class ZendDbRepository implements Repository
         return $this->getSlaveSql()->select()->from($this->tableName());
     }
 
-    protected function executeSelect($select)
+    protected function performWrite(PreparableSqlInterface $preparableSqlInterface)
     {
-        $statement = $this->getSlaveSql()->prepareStatementForSqlObject($select);
-        $result = $statement->execute();
+        return $this->getMasterSql()->prepareStatementForSqlObject($preparableSqlInterface)->execute();
+    }
+
+    protected function performRead(Select $select)
+    {
+        return $this->getSlaveSql()->prepareStatementForSqlObject($select)->execute();
+    }
+
+    protected function hydrateAggregateRootsFromResult(ResultInterface $result)
+    {
         $className = $this->aggregateRootClassName();
-        $resultSet = new HydratingResultSet($this->getHydrator(), new $className());
+        $resultSet = new HydratingResultSet($this->hydrator(), new $className());
         $resultSet->initialize($result);
         $aggregateRoots = array();
         foreach ($resultSet as $aggregateRoot) {
@@ -112,30 +156,20 @@ abstract class ZendDbRepository implements Repository
         return $aggregateRoots;
     }
 
-    protected function id()
-    {
-        return 'id';
-    }
-
-    protected function getHydrator()
-    {
-        return new ArraySerializable();
-    }
-
     public function getDbAdapter()
     {
         return $this->dbAdapter;
-    }
-
-    public function getSlaveDbAdapter()
-    {
-        return $this->getDbAdapter()->getSlaveAdapter();
     }
 
     public function setDbAdapter(MasterSlavesAdapterInterface $dbAdapter)
     {
         $this->dbAdapter = $dbAdapter;
         return $this;
+    }
+
+    public function getSlaveDbAdapter()
+    {
+        return $this->getDbAdapter()->getSlaveAdapter();
     }
 
     protected function getMasterSql()
@@ -159,8 +193,4 @@ abstract class ZendDbRepository implements Repository
         $this->slaveSql = $slaveSql;
         return $this;
     }
-
-    protected abstract function tableName();
-
-    protected abstract function aggregateRootClassName();
 }
