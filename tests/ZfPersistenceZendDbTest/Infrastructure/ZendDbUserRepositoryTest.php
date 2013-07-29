@@ -7,11 +7,14 @@ use ZfPersistenceBaseTest\ServiceManagerFactory;
 class ZendDbUserRepositoryTest extends \PHPUnit_Extensions_Database_TestCase
 {
     protected static $serviceManager;
+    protected static $connection;
     protected $repository;
     
     public static function setUpBeforeClass()
     {
         static::$serviceManager = ServiceManagerFactory::getServiceManager();
+        static::$connection = static::$serviceManager->get('Zend\Db\Adapter\Adapter')->getDriver()->getConnection()->getResource();
+		static::$connection->exec(file_get_contents(TEST_BASE_PATH . '/data/schema.sql'));
     }
     
     protected function setUp()
@@ -21,9 +24,7 @@ class ZendDbUserRepositoryTest extends \PHPUnit_Extensions_Database_TestCase
 
     public function getConnection()
     {
-        $dbAdapter = static::$serviceManager->get('Zend\Db\Adapter\Adapter');
-		$dbAdapter->query(file_get_contents(TEST_BASE_PATH . '/data/schema.sql'));
-		return $this->createDefaultDBConnection($dbAdapter->getDriver()->getConnection()->getResource());
+		return $this->createDefaultDBConnection(static::$connection);
     }
 
     public function getDataSet()
