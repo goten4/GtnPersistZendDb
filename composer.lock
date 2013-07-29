@@ -3,20 +3,20 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "a81e2d27851c8170728aa142d9e9fbaa",
+    "hash": "63adf9b1f0ab0fd255c9e5c566cd6095",
     "packages": [
         {
             "name": "zendframework/zendframework",
-            "version": "dev-master",
+            "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zf2.git",
-                "reference": "0a747680a366e2b77030e26bf62c6840906f8323"
+                "reference": "78eaad03cb25aa89e448beaad55cdbb6fe1227fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zf2/zipball/0a747680a366e2b77030e26bf62c6840906f8323",
-                "reference": "0a747680a366e2b77030e26bf62c6840906f8323",
+                "url": "https://api.github.com/repos/zendframework/zf2/zipball/78eaad03cb25aa89e448beaad55cdbb6fe1227fc",
+                "reference": "78eaad03cb25aa89e448beaad55cdbb6fe1227fc",
                 "shasum": ""
             },
             "require": {
@@ -80,7 +80,9 @@
                 "ircmaxell/random-lib": "dev-master",
                 "ircmaxell/security-lib": "dev-master",
                 "ocramius/proxy-manager": "0.4.*",
-                "phpunit/phpunit": "3.7.*"
+                "phpunit/phpunit": "3.7.*",
+                "satooshi/php-coveralls": "dev-master",
+                "sebastianbergmann/phpcov": "1.1.0"
             },
             "suggest": {
                 "doctrine/annotations": "Doctrine Annotations >=1.0 for annotation features",
@@ -117,7 +119,7 @@
                 "framework",
                 "zf2"
             ],
-            "time": "2013-07-26 13:45:30"
+            "time": "2013-07-26 13:45:40"
         }
     ],
     "packages-dev": [
