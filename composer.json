@@ -5,6 +5,7 @@
     "keywords": [
         "ddd",
         "module",
+        "Zend\\Db",
         "zf2"
     ],
     "authors": [
@@ -15,14 +16,7 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "zendframework/zend-stdlib": ">=2.2",
-        "zendframework/zend-mvc": ">=2.2",
-        "zendframework/zend-form": ">=2.2",
-        "zendframework/zend-loader": ">=2.2",
-        "zendframework/zend-servicemanager": ">=2.2"
-    },
-    "require": {
-    	"zendframework/zendframework": "2.*"
+        "zendframework/zendframework": "2.*"
     },
     "minimum-stability": "dev",
     "autoload": {
