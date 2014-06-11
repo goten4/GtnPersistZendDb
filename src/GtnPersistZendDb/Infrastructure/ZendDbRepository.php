@@ -1,8 +1,8 @@
 <?php
 namespace GtnPersistZendDb\Infrastructure;
 
-use GtnPersistBase\Model\AggregateRoot;
-use GtnPersistBase\Model\Repository;
+use GtnPersistBase\Model\AggregateRootInterface;
+use GtnPersistBase\Model\RepositoryInterface;
 use GtnPersistZendDb\Db\Adapter\MasterSlavesAdapterInterface;
 use Zend\Db\Adapter\Driver\ResultInterface;
 use Zend\Db\ResultSet\HydratingResultSet;
@@ -13,7 +13,7 @@ use Zend\Db\Sql\Select;
 use Zend\Db\Sql\Sql;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 
-class ZendDbRepository implements Repository
+class ZendDbRepository implements RepositoryInterface
 {
     /**
      * @var MasterSlavesAdapterInterface
@@ -74,7 +74,7 @@ class ZendDbRepository implements Repository
 
     /**
      * @param mixed $id
-     * @return AggregateRoot
+     * @return AggregateRootInterface
      */
     public function getById($id)
     {
@@ -92,10 +92,10 @@ class ZendDbRepository implements Repository
     }
 
     /**
-     * @param AggregateRoot $aggregateRoot
-     * @return Repository
+     * @param AggregateRootInterface $aggregateRoot
+     * @return RepositoryInterface
      */
-    public function add(AggregateRoot $aggregateRoot)
+    public function add(AggregateRootInterface $aggregateRoot)
     {
         $data = $this->getAggregateRootHydrator()->extract($aggregateRoot);
         $insert = $this->getMasterSql()->insert($this->getTableName())->values($data);
@@ -104,10 +104,10 @@ class ZendDbRepository implements Repository
     }
 
     /**
-     * @param AggregateRoot $aggregateRoot
-     * @return Repository
+     * @param AggregateRootInterface $aggregateRoot
+     * @return RepositoryInterface
      */
-    public function update(AggregateRoot $aggregateRoot)
+    public function update(AggregateRootInterface $aggregateRoot)
     {
         $data = $this->getAggregateRootHydrator()->extract($aggregateRoot);
         $update = $this->getMasterSql()->update($this->getTableName())->set($data);
@@ -119,10 +119,10 @@ class ZendDbRepository implements Repository
     }
 
     /**
-     * @param AggregateRoot $aggregateRoot
-     * @return Repository
+     * @param AggregateRootInterface $aggregateRoot
+     * @return RepositoryInterface
      */
-    public function remove(AggregateRoot $aggregateRoot)
+    public function remove(AggregateRootInterface $aggregateRoot)
     {
         $delete = $this->getMasterSql()->delete($this->getTableName());
         $delete->where(array(
@@ -134,13 +134,13 @@ class ZendDbRepository implements Repository
 
     /**
      * @param array $aggregateRoots
-     * @return Repository
+     * @return RepositoryInterface
      */
     public function removeAll(array $aggregateRoots = NULL)
     {
         $delete = $this->getMasterSql()->delete($this->getTableName());
         if ($aggregateRoots) {
-            $ids = array_map(function (AggregateRoot $aggregateRoot) {
+            $ids = array_map(function (AggregateRootInterface $aggregateRoot) {
                 return $aggregateRoot->getId();
             }, $aggregateRoots);
             $delete->where->in($this->getTableId(), $ids);
@@ -176,7 +176,7 @@ class ZendDbRepository implements Repository
     }
 
     /**
-     * Get TableName.
+     * Get table name.
      *
      * @return string
      */
@@ -186,7 +186,7 @@ class ZendDbRepository implements Repository
     }
 
     /**
-     * Set TableName.
+     * Set table name.
      *
      * @param string $tableName
      * @return ZendDbRepository
@@ -198,7 +198,7 @@ class ZendDbRepository implements Repository
     }
 
     /**
-     * Get TableId.
+     * Get table id.
      *
      * @return mixed
      */
@@ -208,7 +208,7 @@ class ZendDbRepository implements Repository
     }
 
     /**
-     * Set TableId.
+     * Set table id.
      *
      * @param mixed $tableId
      * @return ZendDbRepository
@@ -220,7 +220,7 @@ class ZendDbRepository implements Repository
     }
 
     /**
-     * Get AggregateRootClass.
+     * Get aggregate root class name.
      *
      * @return string
      */
@@ -230,7 +230,7 @@ class ZendDbRepository implements Repository
     }
 
     /**
-     * Set AggregateRootClass.
+     * Set aggregate root class name.
      *
      * @param string $aggregateRootClass
      * @return ZendDbRepository
@@ -242,7 +242,7 @@ class ZendDbRepository implements Repository
     }
 
     /**
-     * Get AggregateRootHydrator.
+     * Get aggregate root hydrator.
      *
      * @return \Zend\Stdlib\Hydrator\HydratorInterface
      */
@@ -252,7 +252,7 @@ class ZendDbRepository implements Repository
     }
 
     /**
-     * Set AggregateRootHydrator.
+     * Set aggregate root hydrator.
      *
      * @param \Zend\Stdlib\Hydrator\HydratorInterface $aggregateRootHydrator
      * @return ZendDbRepository
@@ -275,7 +275,7 @@ class ZendDbRepository implements Repository
 
     /**
      * @param $criteria
-     * @return AggregateRoot
+     * @return AggregateRootInterface
      */
     protected function getBy($criteria)
     {

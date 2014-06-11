@@ -12,19 +12,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/goten4/GtnPersistBase.git",
-                "reference": "40af27593dfdbc1fd2406c467514b41b52fc008a"
+                "reference": "330e5c86b4df0c12676cfe318a658c29283b100f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/goten4/GtnPersistBase/zipball/40af27593dfdbc1fd2406c467514b41b52fc008a",
-                "reference": "40af27593dfdbc1fd2406c467514b41b52fc008a",
+                "url": "https://api.github.com/repos/goten4/GtnPersistBase/zipball/330e5c86b4df0c12676cfe318a658c29283b100f",
+                "reference": "330e5c86b4df0c12676cfe318a658c29283b100f",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3",
                 "zendframework/zend-loader": "2.3.*",
-                "zendframework/zend-modulemanager": "2.3.*",
-                "zendframework/zend-servicemanager": "2.3.*"
+                "zendframework/zend-modulemanager": "2.3.*"
             },
             "require-dev": {
                 "phpunit/phpunit": "3.7.*",
@@ -33,8 +32,8 @@
             "type": "library",
             "autoload": {
                 "psr-0": {
-                    "GtnPersistBase\\": "src",
-                    "GtnPersistBaseTest\\": "tests"
+                    "GtnPersistBase": "src/",
+                    "GtnPersistBaseTest": "tests/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -56,7 +55,7 @@
                 "module",
                 "zf2"
             ],
-            "time": "2014-05-02 20:54:38"
+            "time": "2014-06-11 16:28:25"
         },
         {
             "name": "zendframework/zend-config",

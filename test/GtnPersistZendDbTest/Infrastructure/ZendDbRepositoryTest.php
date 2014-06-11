@@ -1,7 +1,7 @@
 <?php
 namespace GtnPersistZendDbTest\Infrastructure;
 
-use GtnPersistBase\Model\Repository;
+use GtnPersistBase\Model\RepositoryInterface;
 use GtnPersistZendDbTest\Bootstrap;
 use GtnPersistZendDbTest\Model\Company;
 use Zend\Db\Adapter\AdapterInterface;
@@ -14,7 +14,7 @@ class ZendDbRepositoryTest extends \PHPUnit_Extensions_Database_TestCase
     protected static $connection;
 
     /**
-     * @var Repository
+     * @var RepositoryInterface
      */
     protected static $repository;
 

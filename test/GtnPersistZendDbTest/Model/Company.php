@@ -1,9 +1,9 @@
 <?php
 namespace GtnPersistZendDbTest\Model;
 
-use GtnPersistBase\Model\AggregateRoot;
+use GtnPersistBase\Model\AggregateRootInterface;
 
-class Company implements AggregateRoot
+class Company implements AggregateRootInterface
 {
     /**
      * @var int

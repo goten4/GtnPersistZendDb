@@ -116,7 +116,7 @@ class ZendDbRepositoryFactoryTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      * @expectedException \GtnPersistZendDb\Exception\UnexpectedValueException
-     * @expectedExceptionMessage GtnPersistZendDbTest\Model\Invalid: aggregate_root_class must implement GtnPersistBase\Model\AggregateRoot
+     * @expectedExceptionMessage GtnPersistZendDbTest\Model\Invalid: aggregate_root_class must implement GtnPersistBase\Model\AggregateRootInterface
      */
     public function cannotCreateCustomRepositoryWithInvalidAggregateRootClass()
     {

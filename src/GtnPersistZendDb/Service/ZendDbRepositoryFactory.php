@@ -1,7 +1,7 @@
 <?php
 namespace GtnPersistZendDb\Service;
 
-use GtnPersistBase\Model\AggregateRoot;
+use GtnPersistBase\Model\AggregateRootInterface;
 use GtnPersistZendDb\Db\Adapter\MasterSlavesAdapterInterface;
 use GtnPersistZendDb\Exception\MissingConfigurationException;
 use GtnPersistZendDb\Exception\UnexpectedValueException;
@@ -37,8 +37,8 @@ class ZendDbRepositoryFactory implements RepositoryFactoryInterface
         $repository->setTableId($this->get('table_id', 'id'));
 
         $aggregateRootClass = $this->getStrict('aggregate_root_class');
-        if (!new $aggregateRootClass instanceof AggregateRoot) {
-            throw new UnexpectedValueException("$aggregateRootClass: aggregate_root_class must implement GtnPersistBase\\Model\\AggregateRoot");
+        if (!new $aggregateRootClass instanceof AggregateRootInterface) {
+            throw new UnexpectedValueException("$aggregateRootClass: aggregate_root_class must implement GtnPersistBase\\Model\\AggregateRootInterface");
         }
         $repository->setAggregateRootClass($aggregateRootClass);
 
