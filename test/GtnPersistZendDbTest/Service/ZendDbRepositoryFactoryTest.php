@@ -6,16 +6,25 @@ use GtnPersistZendDbTest\Bootstrap;
 
 class ZendDbRepositoryFactoryTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var ZendDbRepositoryFactory
+     */
+    protected $factory;
+
+    protected function setUp()
+    {
+        $this->factory = new ZendDbRepositoryFactory();
+    }
+
     /** @test */
     public function canCreateSimpleRepository()
     {
-        $factory = new ZendDbRepositoryFactory();
-        $factory->setConfig(array(
+        $this->factory->setConfig(array(
             'table_name' => 'companies',
             'aggregate_root_class' => 'GtnPersistZendDbTest\Model\Company',
         ));
 
-        $repository = $factory->createService(Bootstrap::getServiceManager());
+        $repository = $this->factory->createService(Bootstrap::getServiceManager());
 
         $this->assertInstanceOf('GtnPersistZendDb\Infrastructure\ZendDbRepository', $repository);
         $this->assertEquals('companies', $repository->getTableName());
@@ -27,8 +36,7 @@ class ZendDbRepositoryFactoryTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function canCreateCustomRepository()
     {
-        $factory = new ZendDbRepositoryFactory();
-        $factory->setConfig(array(
+        $this->factory->setConfig(array(
             'table_name' => 'users',
             'table_id' => 'user_id',
             'aggregate_root_class' => 'GtnPersistZendDbTest\Model\User',
@@ -36,7 +44,7 @@ class ZendDbRepositoryFactoryTest extends \PHPUnit_Framework_TestCase
             'repository_class' => 'GtnPersistZendDbTest\Infrastructure\ZendDbUserRepository',
         ));
 
-        $repository = $factory->createService(Bootstrap::getServiceManager());
+        $repository = $this->factory->createService(Bootstrap::getServiceManager());
 
         $this->assertInstanceOf('GtnPersistZendDbTest\Infrastructure\ZendDbUserRepository', $repository);
         $this->assertEquals('users', $repository->getTableName());
@@ -52,14 +60,13 @@ class ZendDbRepositoryFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function cannotCreateCustomRepositoryWithInvalidRepositoryClass()
     {
-        $factory = new ZendDbRepositoryFactory();
-        $factory->setConfig(array(
+        $this->factory->setConfig(array(
             'table_name' => 'users',
             'aggregate_root_class' => 'GtnPersistZendDbTest\Model\User',
             'repository_class' => 'GtnPersistZendDbTest\Infrastructure\ZendDbInvalidRepository',
         ));
 
-        $factory->createService(Bootstrap::getServiceManager());
+        $this->factory->createService(Bootstrap::getServiceManager());
     }
 
     /**
@@ -69,12 +76,11 @@ class ZendDbRepositoryFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function cannotCreateCustomRepositoryWithoutTableName()
     {
-        $factory = new ZendDbRepositoryFactory();
-        $factory->setConfig(array(
+        $this->factory->setConfig(array(
             'aggregate_root_class' => 'GtnPersistZendDbTest\Model\User',
         ));
 
-        $factory->createService(Bootstrap::getServiceManager());
+        $this->factory->createService(Bootstrap::getServiceManager());
     }
 
     /**
@@ -84,12 +90,11 @@ class ZendDbRepositoryFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function cannotCreateCustomRepositoryWithoutAggregateRootClass()
     {
-        $factory = new ZendDbRepositoryFactory();
-        $factory->setConfig(array(
+        $this->factory->setConfig(array(
             'table_name' => 'users',
         ));
 
-        $factory->createService(Bootstrap::getServiceManager());
+        $this->factory->createService(Bootstrap::getServiceManager());
     }
 
     /**
@@ -99,14 +104,13 @@ class ZendDbRepositoryFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function cannotCreateCustomRepositoryWithInvalidHydratorClass()
     {
-        $factory = new ZendDbRepositoryFactory();
-        $factory->setConfig(array(
+        $this->factory->setConfig(array(
             'table_name' => 'users',
             'aggregate_root_class' => 'GtnPersistZendDbTest\Model\User',
             'aggregate_root_hydrator_class' => 'GtnPersistZendDbTest\Model\InvalidHydrator',
         ));
 
-        $factory->createService(Bootstrap::getServiceManager());
+        $this->factory->createService(Bootstrap::getServiceManager());
     }
 
     /**
@@ -116,12 +120,11 @@ class ZendDbRepositoryFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function cannotCreateCustomRepositoryWithInvalidAggregateRootClass()
     {
-        $factory = new ZendDbRepositoryFactory();
-        $factory->setConfig(array(
+        $this->factory->setConfig(array(
             'table_name' => 'users',
             'aggregate_root_class' => 'GtnPersistZendDbTest\Model\Invalid',
         ));
 
-        $factory->createService(Bootstrap::getServiceManager());
+        $this->factory->createService(Bootstrap::getServiceManager());
     }
 }

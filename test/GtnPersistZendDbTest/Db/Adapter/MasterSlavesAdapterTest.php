@@ -47,6 +47,10 @@ class MasterSlavesAdapterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('mysql:dbname=test;host=slave2.local', $connectionParameters['dsn']);
     }
 
+    /**
+     * @param string $hostname
+     * @return array
+     */
     private function adapterConfig($hostname)
     {
         return array(

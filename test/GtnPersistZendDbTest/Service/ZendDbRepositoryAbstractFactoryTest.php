@@ -27,7 +27,7 @@ class ZendDbRepositoryAbstractFactoryTest extends \PHPUnit_Framework_TestCase
             ),
         ));
 
-        $this->assertFalse($serviceManager->has('UnknownRepository'));
+        $this->assertFalse($this->factory->canCreateServiceWithName($serviceManager, 'unknownrepository', 'UnknownRepository'));
     }
 
     /** @test */
@@ -42,7 +42,7 @@ class ZendDbRepositoryAbstractFactoryTest extends \PHPUnit_Framework_TestCase
             ),
         ));
 
-        $this->assertTrue($serviceManager->has('UserRepository'));
+        $this->assertTrue($this->factory->canCreateServiceWithName($serviceManager, 'userrepository', 'UserRepository'));
     }
 
     /** @test */
@@ -50,7 +50,7 @@ class ZendDbRepositoryAbstractFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $serviceManager = $this->getServiceManager(array());
 
-        $this->assertFalse($serviceManager->has('UnknownRepository'));
+        $this->assertFalse($this->factory->canCreateServiceWithName($serviceManager, 'unknownrepository', 'UnknownRepository'));
     }
 
     /** @test */
@@ -58,7 +58,7 @@ class ZendDbRepositoryAbstractFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $serviceManager = $this->getServiceManager(null);
 
-        $this->assertFalse($serviceManager->has('UnknownRepository'));
+        $this->assertFalse($this->factory->canCreateServiceWithName($serviceManager, 'unknownrepository', 'UnknownRepository'));
     }
 
     /** @test */
@@ -66,7 +66,7 @@ class ZendDbRepositoryAbstractFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $serviceManager = $this->getServiceManager(array('zenddb_repositories' => ''));
 
-        $this->assertFalse($serviceManager->has('UnknownRepository'));
+        $this->assertFalse($this->factory->canCreateServiceWithName($serviceManager, 'unknownrepository', 'UnknownRepository'));
     }
 
     /** @test */

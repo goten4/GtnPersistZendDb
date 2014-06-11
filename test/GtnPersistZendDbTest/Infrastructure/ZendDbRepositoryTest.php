@@ -5,15 +5,9 @@ use GtnPersistBase\Model\Repository;
 use GtnPersistZendDbTest\Bootstrap;
 use GtnPersistZendDbTest\Model\Company;
 use Zend\Db\Adapter\AdapterInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
 class ZendDbRepositoryTest extends \PHPUnit_Extensions_Database_TestCase
 {
-    /**
-     * @var ServiceLocatorInterface
-     */
-    protected static $serviceManager;
-
     /**
      * @var \PDO
      */
@@ -26,12 +20,14 @@ class ZendDbRepositoryTest extends \PHPUnit_Extensions_Database_TestCase
 
     public static function setUpBeforeClass()
     {
-        static::$serviceManager = Bootstrap::getServiceManager();
+        $serviceManager = Bootstrap::getServiceManager();
+        static::$repository = $serviceManager->get('CompanyRepository');
+
         /** @var $dbAdapter AdapterInterface */
-        $dbAdapter = static::$serviceManager->get('Zend\Db\Adapter\Adapter');
+        $dbAdapter = $serviceManager->get('Zend\Db\Adapter\Adapter');
         static::$connection = $dbAdapter->getDriver()->getConnection()->getResource();
+
         static::$connection->exec(file_get_contents(TEST_BASE_PATH . '/data/schema.sql'));
-        static::$repository = static::$serviceManager->get('CompanyRepository');
     }
 
     public function getConnection()

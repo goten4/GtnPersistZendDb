@@ -52,18 +52,32 @@ class MasterSlavesAdapterFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(2, count($adapter->getSlaveAdapters()));
     }
 
+    /**
+     * @param string $master
+     * @param array  $slaves
+     * @return ServiceManager
+     */
     private function createServiceManager($master, array $slaves = array())
     {
         $config = $this->config($master, $slaves);
         return $this->createServiceManagerFromConfig($config);
     }
 
+    /**
+     * @param $config
+     * @return ServiceManager
+     */
     private function createServiceManagerFromConfig($config)
     {
         $serviceManager = new ServiceManager(new Config($config['service_manager']));
         return $serviceManager->setService('Config', $config);
     }
 
+    /**
+     * @param string $master
+     * @param array  $slaves
+     * @return array
+     */
     private function config($master, array $slaves = array())
     {
         $config = array(
@@ -78,6 +92,9 @@ class MasterSlavesAdapterFactoryTest extends \PHPUnit_Framework_TestCase
         return $config;
     }
 
+    /**
+     * @return array
+     */
     private function serviceManagerConfig()
     {
         $serviceManagerConfig = array(
@@ -91,6 +108,10 @@ class MasterSlavesAdapterFactoryTest extends \PHPUnit_Framework_TestCase
         return $serviceManagerConfig;
     }
 
+    /**
+     * @param string $hostname
+     * @return array
+     */
     private function adapterConfig($hostname)
     {
         return array(
