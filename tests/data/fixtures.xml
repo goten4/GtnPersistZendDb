@@ -1,6 +1,0 @@
-<?xml version="1.0" ?>
-<dataset>
-    <users id="1" name="John" />
-    <users id="2" name="Jane" />
-    <users id="3" name="Mike" />
-</dataset>

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="./tests/bootstrap.php" colors="true" syntaxCheck="true" backupGlobals="false">
-    <testsuites>
-        <testsuite name="ZfPersistenceZendDb Test Suite">
-            <directory>./tests/ZfPersistenceZendDbTest</directory>
-        </testsuite>
-    </testsuites>
-</phpunit>

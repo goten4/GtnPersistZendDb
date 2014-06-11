@@ -1,27 +1,37 @@
 {
-    "name": "goten4/zf-persistence-zend-db",
-    "description": "Zend Framework 2 Module that provides Zend\\Db implementation for ZfPersistenceBase",
+    "name": "goten4/gtn-persist-zend-db",
     "type": "library",
+    "description": "Zend Framework 2 Module that provides Zend\\Db implementation for GtnPersistBase",
     "keywords": [
         "ddd",
         "module",
         "Zend\\Db",
         "zf2"
     ],
+    "homepage": "http://github.com/goten4/GtnPersistBase",
+    "license": "MIT",
     "authors": [
         {
             "name": "Emmanuel Bouton",
-            "email": "goten4@gmail.com"
+            "email": "goten4@gmail.com",
+            "homepage": "http://github.com/goten4",
+            "role": "Developer"
         }
     ],
     "require": {
         "php": ">=5.3.3",
-        "zendframework/zendframework": "2.*"
+        "zendframework/zendframework": "2.*",
+        "goten4/gtn-persist-base": "dev-master"
     },
-    "minimum-stability": "dev",
+    "require-dev": {
+        "phpunit/PHPUnit": "3.7.*",
+        "phpunit/dbunit": "1.3.*",
+        "satooshi/php-coveralls": "dev-master"
+    },
     "autoload": {
         "psr-0": {
-            "ZfPersistenceZendDb\\": "src/"
+            "GtnPersistZendDb": "src/",
+            "GtnPersistZendDbTest": "test/"
         }
     }
 }

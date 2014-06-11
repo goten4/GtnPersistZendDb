@@ -1,0 +1,25 @@
+<?php
+/**
+ * Database Configuration
+ *
+ * If you have a ./config/autoload/ directory set up for your project, you can
+ * drop this config file in it and change the values as you wish.
+ */
+return array(
+//    'db' => array(
+//        'master' => array(
+//            'driver' => 'Pdo',
+//            'username' => 'test',
+//            'password' => 'test',
+//            'dsn' => 'mysql:dbname=test_rw;host=localhost;charset=utf8'
+//        ),
+//        'slaves' => array(
+//            array(
+//                'driver' => 'Pdo',
+//                'username' => 'test',
+//                'password' => 'test',
+//                'dsn' => 'mysql:dbname=test_ro;host=localhost;charset=utf8'
+//            ),
+//        ),
+//    ),
+);

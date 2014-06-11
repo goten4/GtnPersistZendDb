@@ -1,15 +1,17 @@
   Zend Framework 2 DDD Persistence Module (Zend\Db)
 ===================================================
+[![Build Status](https://secure.travis-ci.org/goten4/GtnPersistZendDb.png?branch=master)](http://travis-ci.org/goten4/GtnPersistZendDb)
+[![Coverage Status](https://coveralls.io/repos/goten4/GtnPersistZendDb/badge.png?branch=master)](https://coveralls.io/r/goten4/GtnPersistZendDb)
 
 ## Introduction
 
-**ZfPersistenceZendDb** is a Zend Framework 2 module providing the basics for persistence using Zend\Db
+**GtnPersistZendDb** is a Zend Framework 2 module providing the basics for persistence using Zend\Db
 trying to follow [DDD principles](http://domaindrivendesign.org/books/#DDD).
 
 ## Requirements
 
 * Zend Framework 2
-* [ZfPersistenceBase](https://github.com/goten4/ZfPersistenceBase)
+* [GtnPersistBase](https://github.com/goten4/GtnPersistBase)
 
 ## Installation
 
@@ -19,10 +21,10 @@ Via composer or simply clone this project into your `./vendor/` directory and en
 Provided Classes and Interfaces
 -------------------------------
 
-* `ZfPersistenceBase\Infrastructure\ZendDbRepository` - Zend\Db Repository implementation.
-* `ZfPersistenceBase\Infrastructure\ZendDbRepositoryFactory` - Factory for creating ZendDbRepository
+* `GtnPersistZendDb\Infrastructure\ZendDbRepository` - Zend\Db Repository implementation.
+* `GtnPersistZendDb\Service\ZendDbRepositoryFactory` - Factory for creating ZendDbRepository
+* `GtnPersistZendDb\Service\ZendDbRepositoryAbstractFactory` - Abstract Factory for creating repositories
 
 ## See also
 
-* [ZfPersistenceBase](https://github.com/goten4/ZfPersistenceBase)
-* [ZfPersistenceDoctrineORM](https://github.com/goten4/ZfPersistenceDoctrineORM)
+* [GtnPersistBase](https://github.com/goten4/GtnPersistBase)

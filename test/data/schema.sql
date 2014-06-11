@@ -1,0 +1,5 @@
+DROP TABLE IF EXISTS `companies`;
+CREATE TABLE `companies` (
+  `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  `name` varchar(255) DEFAULT NULL
+);

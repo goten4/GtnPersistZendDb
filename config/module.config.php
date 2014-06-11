@@ -2,10 +2,13 @@
 return array(
     'service_manager' => array(
         'factories' => array(
-            'Zend\Db\Adapter\Adapter' => 'ZfPersistenceZendDb\Db\Adapter\MasterSlavesAdapterFactory',
+            'Zend\Db\Adapter\Adapter' => 'GtnPersistZendDb\Db\Adapter\MasterSlavesAdapterFactory',
         ),
         'invokables' => array(
-            'ZfPersistence\RandomGenerator' => 'ZfPersistenceZendDb\ZendRandomGenerator',
+            'GtnPersist\RandomGenerator' => 'GtnPersistZendDb\ZendRandomGenerator',
+        ),
+        'abstract_factories' => array(
+            'GtnPersistZendDb\Service\ZendDbRepositoryAbstractFactory',
         ),
     )
 );
