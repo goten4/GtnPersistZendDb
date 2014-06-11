@@ -1,11 +1,11 @@
 {
     "name": "goten4/gtn-persist-zend-db",
     "type": "library",
-    "description": "Zend Framework 2 Module that provides Zend\\Db implementation for GtnPersistBase",
+    "description": "Zend Framework 2 Module that provides ZendDb implementation for GtnPersistBase",
     "keywords": [
         "ddd",
         "module",
-        "Zend\\Db",
+        "ZendDb",
         "zf2"
     ],
     "homepage": "http://github.com/goten4/GtnPersistBase",
@@ -20,7 +20,16 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "zendframework/zendframework": "2.*",
+        "zendframework/zend-modulemanager": "2.3.*",
+        "zendframework/zend-servicemanager": "2.3.*",
+        "zendframework/zend-form": "2.3.*",
+        "zendframework/zend-mvc": "2.3.*",
+        "zendframework/zend-stdlib": "2.3.*",
+        "zendframework/zend-view": "2.3.*",
+        "zendframework/zend-config": "2.3.*",
+        "zendframework/zend-log": "2.3.*",
+        "zendframework/zend-serializer": "2.3.*",
+        "zendframework/zend-db": "2.3.*",
         "goten4/gtn-persist-base": "dev-master"
     },
     "require-dev": {
