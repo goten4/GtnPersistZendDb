@@ -1,5 +1,5 @@
 <?php
-namespace GtnPersistZendDbTest\Model;
+namespace GtnPersistZendDbTest\Infrastructure;
 
 use Zend\Stdlib\Hydrator\HydratorInterface;
 

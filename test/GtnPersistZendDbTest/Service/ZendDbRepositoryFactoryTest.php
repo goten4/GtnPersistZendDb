@@ -40,7 +40,7 @@ class ZendDbRepositoryFactoryTest extends \PHPUnit_Framework_TestCase
             'table_name' => 'users',
             'table_id' => 'user_id',
             'aggregate_root_class' => 'GtnPersistZendDbTest\Model\User',
-            'aggregate_root_hydrator_class' => 'GtnPersistZendDbTest\Model\UserHydrator',
+            'aggregate_root_hydrator_class' => 'GtnPersistZendDbTest\Infrastructure\UserHydrator',
             'repository_class' => 'GtnPersistZendDbTest\Infrastructure\ZendDbUserRepository',
         ));
 
@@ -50,7 +50,7 @@ class ZendDbRepositoryFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('users', $repository->getTableName());
         $this->assertEquals('user_id', $repository->getTableId());
         $this->assertEquals('GtnPersistZendDbTest\Model\User', $repository->getAggregateRootClass());
-        $this->assertInstanceOf('GtnPersistZendDbTest\Model\UserHydrator', $repository->getAggregateRootHydrator());
+        $this->assertInstanceOf('GtnPersistZendDbTest\Infrastructure\UserHydrator', $repository->getAggregateRootHydrator());
     }
 
     /**
@@ -100,14 +100,14 @@ class ZendDbRepositoryFactoryTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      * @expectedException \GtnPersistZendDb\Exception\UnexpectedValueException
-     * @expectedExceptionMessage GtnPersistZendDbTest\Model\InvalidHydrator: aggregate_root_hydrator_class must implement Zend\Stdlib\Hydrator\HydratorInterface
+     * @expectedExceptionMessage GtnPersistZendDbTest\Infrastructure\InvalidHydrator: aggregate_root_hydrator_class must implement Zend\Stdlib\Hydrator\HydratorInterface
      */
     public function cannotCreateCustomRepositoryWithInvalidHydratorClass()
     {
         $this->factory->setConfig(array(
             'table_name' => 'users',
             'aggregate_root_class' => 'GtnPersistZendDbTest\Model\User',
-            'aggregate_root_hydrator_class' => 'GtnPersistZendDbTest\Model\InvalidHydrator',
+            'aggregate_root_hydrator_class' => 'GtnPersistZendDbTest\Infrastructure\InvalidHydrator',
         ));
 
         $this->factory->createService(Bootstrap::getServiceManager());
