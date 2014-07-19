@@ -33,6 +33,7 @@ class ZendDbRepositoryFactory implements RepositoryFactoryInterface
             throw new UnexpectedValueException("$repositoryClass: repository_class must extend GtnPersistZendDb\\Infrastructure\\ZendDbRepository");
         }
 
+        $repository->setConfig($this->getConfig());
         $repository->setTableName($this->getStrict('table_name'));
         $repository->setTableId($this->get('table_id', 'id'));
 

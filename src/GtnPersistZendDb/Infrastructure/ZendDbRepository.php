@@ -15,40 +15,29 @@ use Zend\Stdlib\Hydrator\HydratorInterface;
 
 class ZendDbRepository implements RepositoryInterface
 {
-    /**
-     * @var MasterSlavesAdapterInterface
-     */
+    /** @var MasterSlavesAdapterInterface */
     protected $dbAdapter;
 
-    /**
-     * @var Sql
-     */
+    /** @var Sql */
     protected $masterSql;
 
-    /**
-     * @var Sql
-     */
+    /** @var Sql */
     protected $slaveSql;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $tableName;
 
-    /**
-     * @var mixed
-     */
+    /** @var mixed */
     protected $tableId;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $aggregateRootClass;
 
-    /**
-     * @var HydratorInterface
-     */
+    /** @var HydratorInterface */
     protected $aggregateRootHydrator;
+
+    /** @var array */
+    protected $config;
 
     /**
      * @param MasterSlavesAdapterInterface $dbAdapter
@@ -260,6 +249,28 @@ class ZendDbRepository implements RepositoryInterface
     public function setAggregateRootHydrator(HydratorInterface $aggregateRootHydrator)
     {
         $this->aggregateRootHydrator = $aggregateRootHydrator;
+        return $this;
+    }
+
+    /**
+     * Get Config.
+     *
+     * @return array
+     */
+    public function getConfig()
+    {
+        return $this->config;
+    }
+
+    /**
+     * Set Config.
+     *
+     * @param array $config
+     * @return ZendDbRepository
+     */
+    public function setConfig($config)
+    {
+        $this->config = $config;
         return $this;
     }
 

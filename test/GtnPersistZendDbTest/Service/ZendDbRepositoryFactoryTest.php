@@ -19,14 +19,16 @@ class ZendDbRepositoryFactoryTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function canCreateSimpleRepository()
     {
-        $this->factory->setConfig(array(
+        $config = array(
             'table_name' => 'companies',
             'aggregate_root_class' => 'GtnPersistZendDbTest\Model\Company',
-        ));
+        );
+        $this->factory->setConfig($config);
 
         $repository = $this->factory->createService(Bootstrap::getServiceManager());
 
         $this->assertInstanceOf('GtnPersistZendDb\Infrastructure\ZendDbRepository', $repository);
+        $this->assertEquals($config, $repository->getConfig());
         $this->assertEquals('companies', $repository->getTableName());
         $this->assertEquals('id', $repository->getTableId());
         $this->assertEquals('GtnPersistZendDbTest\Model\Company', $repository->getAggregateRootClass());
