@@ -34,7 +34,7 @@ class User implements AggregateRootInterface
      * Set Id.
      *
      * @param int $id
-     * @return Company
+     * @return User
      */
     public function setId($id)
     {
@@ -56,7 +56,7 @@ class User implements AggregateRootInterface
      * Set Name.
      *
      * @param string $name
-     * @return Company
+     * @return User
      */
     public function setName($name)
     {

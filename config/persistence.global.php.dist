@@ -15,6 +15,13 @@ return array(
 //            'aggregate_root_class' => 'My\Model\User',
 //
 //            /**
+//             * The class name of the factory that will create a proxy of the aggregate root,
+//             * must implement GtnPersistZendDb\Service\AggregateRootProxyFactoryInterface.
+//             * This is optional !
+//             */
+//            'aggregate_root_proxy_factory' => 'My\Service\UserProxyFactory',
+//
+//            /**
 //             * The table name associated to the aggregate root.
 //             * This is mandatory !
 //             */
@@ -22,14 +29,14 @@ return array(
 //
 //            /**
 //             * The table id associated to the aggregate root's id.
-//             * This is optionnal, default is 'id'.
+//             * This is optional, default is 'id'.
 //             */
 //            'table_id' => 'user_id',
 //
 //            /**
 //             * Hydrator of the aggregate root which provides the mapping between
 //             * the columns of the table and the properties of the object.
-//             * This is optionnal, default is Zend\Stdlib\Hydrator\ClassMethods.
+//             * This is optional, default is Zend\Stdlib\Hydrator\ClassMethods.
 //             */
 //            'aggregate_root_hydrator_class' => 'My\Infrastructure\UserHydrator',
 //
@@ -37,14 +44,14 @@ return array(
 //             * The factory that will instanciate the repository, should extend
 //             * GtnPersistZendDb\Service\ZendDbRepositoryFactory or at least implement
 //             * GtnPersistZendDb\Service\RepositoryFactoryInterface.
-//             * This is optionnal, default is 'GtnPersistZendDb\Service\ZendDbRepositoryFactory'.
+//             * This is optional, default is 'GtnPersistZendDb\Service\ZendDbRepositoryFactory'.
 //             */
 //            'factory' => 'My\Infrastructure\ZendDb\UserRepositoryFactory',
 //
 //            /**
 //             * The factory that will instanciate the repository, must extend
 //             * GtnPersistZendDb\Infrastructure\ZendDbRepository.
-//             * This is optionnal, default is 'GtnPersistZendDb\Infrastructure\ZendDbRepository'.
+//             * This is optional, default is 'GtnPersistZendDb\Infrastructure\ZendDbRepository'.
 //             */
 //            'repository_class' => 'My\Infrastructure\ZendDb\UserRepository',
 //        )

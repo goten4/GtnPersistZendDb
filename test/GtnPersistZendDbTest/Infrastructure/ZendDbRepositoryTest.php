@@ -66,8 +66,8 @@ class ZendDbRepositoryTest extends \PHPUnit_Extensions_Database_TestCase
         /** @var Company $storedAggregateRoot */
         $storedAggregateRoot = static::$repository->getById(1);
 
-        $this->assertInstanceOf('GtnPersistZendDbTest\Model\Company', $storedAggregateRoot);
-        $this->assertEquals('Multimedia Business Services', $storedAggregateRoot->getName());
+        $this->assertInstanceOf('GtnPersistZendDbTest\Model\CompanyProxy', $storedAggregateRoot);
+        $this->assertEquals('Apple', $storedAggregateRoot->getName());
     }
 
     /** @test */
@@ -77,17 +77,17 @@ class ZendDbRepositoryTest extends \PHPUnit_Extensions_Database_TestCase
 
         $this->assertInternalType('array', $aggregateRoots);
         $this->assertEquals(3, count($aggregateRoots));
-        $this->assertInstanceOf('GtnPersistZendDbTest\Model\Company', $aggregateRoots[0]);
+        $this->assertInstanceOf('GtnPersistZendDbTest\Model\CompanyProxy', $aggregateRoots[0]);
     }
 
     /** @test */
     public function canUpdate()
     {
-        $aggregateRoot = static::$repository->getById(1)->setName('OLM');
+        $aggregateRoot = static::$repository->getById(1)->setName('World Company');
 
         static::$repository->update($aggregateRoot);
 
-        $this->assertEquals('OLM', static::$connection->query('SELECT name FROM companies WHERE id = 1')->fetchColumn(0));
+        $this->assertEquals('World Company', static::$connection->query('SELECT name FROM companies WHERE id = 1')->fetchColumn(0));
     }
 
     /** @test */

@@ -4,6 +4,7 @@ namespace GtnPersistZendDb\Infrastructure;
 use GtnPersistBase\Model\AggregateRootInterface;
 use GtnPersistBase\Model\RepositoryInterface;
 use GtnPersistZendDb\Db\Adapter\MasterSlavesAdapterInterface;
+use GtnPersistZendDb\Service\AggregateRootProxyFactoryInterface;
 use Zend\Db\Adapter\Driver\ResultInterface;
 use Zend\Db\ResultSet\HydratingResultSet;
 use Zend\Db\ResultSet\ResultSet;
@@ -32,6 +33,9 @@ class ZendDbRepository implements RepositoryInterface
 
     /** @var string */
     protected $aggregateRootClass;
+
+    /** @var AggregateRootProxyFactoryInterface */
+    protected $aggregateRootProxyFactory;
 
     /** @var HydratorInterface */
     protected $aggregateRootHydrator;
@@ -231,6 +235,28 @@ class ZendDbRepository implements RepositoryInterface
     }
 
     /**
+     * Get AggregateRootProxyFactory.
+     *
+     * @return AggregateRootProxyFactoryInterface
+     */
+    public function getAggregateRootProxyFactory()
+    {
+        return $this->aggregateRootProxyFactory;
+    }
+
+    /**
+     * Set AggregateRootProxyFactory.
+     *
+     * @param AggregateRootProxyFactoryInterface $aggregateRootProxyFactory
+     * @return ZendDbRepository
+     */
+    public function setAggregateRootProxyFactory($aggregateRootProxyFactory)
+    {
+        $this->aggregateRootProxyFactory = $aggregateRootProxyFactory;
+        return $this;
+    }
+
+    /**
      * Get aggregate root hydrator.
      *
      * @return \Zend\Stdlib\Hydrator\HydratorInterface
@@ -331,7 +357,11 @@ class ZendDbRepository implements RepositoryInterface
         $resultSet->initialize($result);
         $aggregateRoots = array();
         foreach ($resultSet as $aggregateRoot) {
-            $aggregateRoots[] = $aggregateRoot;
+            if ($this->aggregateRootProxyFactory !== null) {
+                $aggregateRoots[] = $this->aggregateRootProxyFactory->createProxy($aggregateRoot);
+            } else {
+                $aggregateRoots[] = $aggregateRoot;
+            }
         }
         return $aggregateRoots;
     }

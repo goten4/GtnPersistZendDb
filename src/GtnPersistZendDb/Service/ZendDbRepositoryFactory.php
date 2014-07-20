@@ -43,6 +43,18 @@ class ZendDbRepositoryFactory implements RepositoryFactoryInterface
         }
         $repository->setAggregateRootClass($aggregateRootClass);
 
+        $aggregateRootProxyFactoryClass = $this->get('aggregate_root_proxy_factory');
+        if ($aggregateRootProxyFactoryClass !== null) {
+            /** @var AggregateRootProxyFactoryInterface $aggregateRootProxyFactory */
+            $aggregateRootProxyFactory = new $aggregateRootProxyFactoryClass;
+            if (!$aggregateRootProxyFactory instanceof AggregateRootProxyFactoryInterface) {
+                throw new UnexpectedValueException("$aggregateRootProxyFactoryClass: aggregate_root_proxy_factory must implement GtnPersistZendDb\\Service\\AggregateRootProxyFactoryInterface");
+            }
+            $aggregateRootProxyFactory->setServiceManager($serviceLocator);
+            $aggregateRootProxyFactory->setConfig($this->config);
+            $repository->setAggregateRootProxyFactory($aggregateRootProxyFactory);
+        }
+
         /** @var HydratorInterface $hydrator */
         $hydratorClass = $this->get('aggregate_root_hydrator_class', 'Zend\Stdlib\Hydrator\ClassMethods');
         $hydrator = new $hydratorClass;

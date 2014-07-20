@@ -1,6 +1,11 @@
 <?xml version="1.0" ?>
 <dataset>
-    <companies id="1" name="Multimedia Business Services" />
-    <companies id="2" name="Orange Application for Business" />
-    <companies id="3" name="Orange" />
+    <companies id="1" name="Apple" />
+    <companies id="2" name="Google" />
+    <companies id="3" name="Yahoo" />
+    <users id="1" name="John Doe" company_id="1" />
+    <users id="2" name="James Martin" company_id="1" />
+    <users id="3" name="Jane Doe" company_id="1" />
+    <users id="4" name="Mickael Hopes" company_id="2" />
+    <users id="5" name="Nick Tanner" company_id="2" />
 </dataset>

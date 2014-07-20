@@ -36,6 +36,42 @@ class ZendDbRepositoryFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function canCreateSimpleRepositoryWithProxyFactory()
+    {
+        $config = array(
+            'table_name' => 'companies',
+            'aggregate_root_class' => 'GtnPersistZendDbTest\Model\Company',
+            'aggregate_root_proxy_factory' => 'GtnPersistZendDbTest\Service\CompanyProxyFactory',
+        );
+        $this->factory->setConfig($config);
+
+        $repository = $this->factory->createService(Bootstrap::getServiceManager());
+
+        $this->assertInstanceOf('GtnPersistZendDb\Infrastructure\ZendDbRepository', $repository);
+        /** @var CompanyProxyFactory $proxyFactory */
+        $proxyFactory = $repository->getAggregateRootProxyFactory();
+        $this->assertInstanceOf('GtnPersistZendDbTest\Service\CompanyProxyFactory', $proxyFactory);
+        $this->assertEquals(Bootstrap::getServiceManager(), $proxyFactory->getServiceManager());
+        $this->assertEquals($config, $proxyFactory->getConfig());
+    }
+
+    /**
+     * @test
+     * @expectedException \GtnPersistZendDb\Exception\UnexpectedValueException
+     * @expectedExceptionMessage GtnPersistZendDbTest\Service\InvalidProxyFactory: aggregate_root_proxy_factory must implement GtnPersistZendDb\Service\AggregateRootProxyFactoryInterface
+     */
+    public function cannotCreateRepositoryWithInvalidProxyFactory()
+    {
+        $this->factory->setConfig(array(
+            'table_name' => 'companies',
+            'aggregate_root_class' => 'GtnPersistZendDbTest\Model\Company',
+            'aggregate_root_proxy_factory' => 'GtnPersistZendDbTest\Service\InvalidProxyFactory',
+        ));
+
+        $this->factory->createService(Bootstrap::getServiceManager());
+    }
+
+    /** @test */
     public function canCreateCustomRepository()
     {
         $this->factory->setConfig(array(
