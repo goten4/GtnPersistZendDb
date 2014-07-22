@@ -49,9 +49,11 @@ class ZendDbRepositoryTest extends \PHPUnit_Extensions_Database_TestCase
     /** @test */
     public function canAdd()
     {
-        static::$repository->add(new Company('CVF'));
+        $aggregateRoot = new Company('CVF');
+        static::$repository->add($aggregateRoot);
 
         $this->assertEquals(4, $this->getTableCount());
+        $this->assertEquals(4, $aggregateRoot->getId());
     }
 
     /** @test */

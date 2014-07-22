@@ -93,6 +93,7 @@ class ZendDbRepository implements RepositoryInterface
         $data = $this->getAggregateRootHydrator()->extract($aggregateRoot);
         $insert = $this->getMasterSql()->insert($this->getTableName())->values($data);
         $this->performWrite($insert);
+        $aggregateRoot->setId($this->getDbAdapter()->getDriver()->getLastGeneratedValue());
         return $this;
     }
 
