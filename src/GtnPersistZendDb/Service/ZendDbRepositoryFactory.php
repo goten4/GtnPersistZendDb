@@ -36,6 +36,7 @@ class ZendDbRepositoryFactory implements RepositoryFactoryInterface
         $repository->setConfig($this->getConfig());
         $repository->setTableName($this->getStrict('table_name'));
         $repository->setTableId($this->get('table_id', 'id'));
+        $repository->setTableSequenceName($this->get('table_sequence_name'));
 
         $aggregateRootClass = $this->getStrict('aggregate_root_class');
         if (!new $aggregateRootClass instanceof AggregateRootInterface) {

@@ -32,6 +32,9 @@ class ZendDbRepository implements RepositoryInterface
     protected $tableId;
 
     /** @var string */
+    protected $tableSequenceName;
+
+    /** @var string */
     protected $aggregateRootClass;
 
     /** @var AggregateRootProxyFactoryInterface */
@@ -93,7 +96,9 @@ class ZendDbRepository implements RepositoryInterface
         $data = $this->getAggregateRootHydrator()->extract($aggregateRoot);
         $insert = $this->getMasterSql()->insert($this->getTableName())->values($data);
         $this->performWrite($insert);
-        $aggregateRoot->setId($this->getDbAdapter()->getDriver()->getLastGeneratedValue());
+        if ($aggregateRoot->getId() === null) {
+            $aggregateRoot->setId($this->getDbAdapter()->getDriver()->getLastGeneratedValue($this->getTableSequenceName()));
+        }
         return $this;
     }
 
@@ -210,6 +215,28 @@ class ZendDbRepository implements RepositoryInterface
     public function setTableId($tableId)
     {
         $this->tableId = $tableId;
+        return $this;
+    }
+
+    /**
+     * Get TableSequenceName.
+     *
+     * @return string
+     */
+    public function getTableSequenceName()
+    {
+        return $this->tableSequenceName;
+    }
+
+    /**
+     * Set TableSequenceName.
+     *
+     * @param string $tableSequenceName
+     * @return ZendDbRepository
+     */
+    public function setTableSequenceName($tableSequenceName)
+    {
+        $this->tableSequenceName = $tableSequenceName;
         return $this;
     }
 

@@ -77,6 +77,7 @@ class ZendDbRepositoryFactoryTest extends \PHPUnit_Framework_TestCase
         $this->factory->setConfig(array(
             'table_name' => 'users',
             'table_id' => 'user_id',
+            'table_sequence_name' => 'user_seq',
             'aggregate_root_class' => 'GtnPersistZendDbTest\Model\User',
             'aggregate_root_hydrator_class' => 'GtnPersistZendDbTest\Infrastructure\UserHydrator',
             'repository_class' => 'GtnPersistZendDbTest\Infrastructure\ZendDbUserRepository',
@@ -87,6 +88,7 @@ class ZendDbRepositoryFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('GtnPersistZendDbTest\Infrastructure\ZendDbUserRepository', $repository);
         $this->assertEquals('users', $repository->getTableName());
         $this->assertEquals('user_id', $repository->getTableId());
+        $this->assertEquals('user_seq', $repository->getTableSequenceName());
         $this->assertEquals('GtnPersistZendDbTest\Model\User', $repository->getAggregateRootClass());
         $this->assertInstanceOf('GtnPersistZendDbTest\Infrastructure\UserHydrator', $repository->getAggregateRootHydrator());
     }

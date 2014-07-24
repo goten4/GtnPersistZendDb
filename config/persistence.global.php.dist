@@ -34,6 +34,12 @@ return array(
 //            'table_id' => 'user_id',
 //
 //            /**
+//             * The name of the sequence of the table (for compliancy with PostgreSQL).
+//             * This is optional.
+//             */
+//            'table_sequence_name' => 'user_seq',
+//
+//            /**
 //             * Hydrator of the aggregate root which provides the mapping between
 //             * the columns of the table and the properties of the object.
 //             * This is optional, default is Zend\Stdlib\Hydrator\ClassMethods.
