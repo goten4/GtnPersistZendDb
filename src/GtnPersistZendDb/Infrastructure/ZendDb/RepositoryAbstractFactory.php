@@ -1,10 +1,10 @@
 <?php
-namespace GtnPersistZendDb\Service;
+namespace GtnPersistZendDb\Infrastructure\ZendDb;
 
 use Zend\ServiceManager\AbstractFactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class ZendDbRepositoryAbstractFactory implements AbstractFactoryInterface
+class RepositoryAbstractFactory implements AbstractFactoryInterface
 {
     /**
      * @var array
@@ -49,7 +49,7 @@ class ZendDbRepositoryAbstractFactory implements AbstractFactoryInterface
         $config = $this->getConfig($serviceLocator);
         $config = $config[$requestedName];
 
-        $factory = isset($config['factory']) ? new $config['factory'] : new ZendDbRepositoryFactory();
+        $factory = isset($config['factory']) ? new $config['factory'] : new RepositoryFactory();
         $factory->setConfig($config);
 
         return $factory->createService($serviceLocator);

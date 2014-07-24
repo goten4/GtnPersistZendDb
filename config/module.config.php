@@ -8,7 +8,7 @@ return array(
             'GtnPersist\RandomGenerator' => 'GtnPersistZendDb\ZendRandomGenerator',
         ),
         'abstract_factories' => array(
-            'GtnPersistZendDb\Service\ZendDbRepositoryAbstractFactory',
+            'GtnPersistZendDb\Infrastructure\ZendDb\RepositoryAbstractFactory',
         ),
     )
 );

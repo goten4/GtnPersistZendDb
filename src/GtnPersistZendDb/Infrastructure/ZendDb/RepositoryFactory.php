@@ -1,15 +1,16 @@
 <?php
-namespace GtnPersistZendDb\Service;
+namespace GtnPersistZendDb\Infrastructure\ZendDb;
 
 use GtnPersistBase\Model\AggregateRootInterface;
 use GtnPersistZendDb\Db\Adapter\MasterSlavesAdapterInterface;
 use GtnPersistZendDb\Exception\MissingConfigurationException;
 use GtnPersistZendDb\Exception\UnexpectedValueException;
-use GtnPersistZendDb\Infrastructure\ZendDbRepository;
+use GtnPersistZendDb\Service\AggregateRootProxyFactoryInterface;
+use GtnPersistZendDb\Service\RepositoryFactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 
-class ZendDbRepositoryFactory implements RepositoryFactoryInterface
+class RepositoryFactory implements RepositoryFactoryInterface
 {
     /**
      * @var array
@@ -18,7 +19,7 @@ class ZendDbRepositoryFactory implements RepositoryFactoryInterface
 
     /**
      * @param ServiceLocatorInterface $serviceLocator
-     * @return ZendDbRepository
+     * @return Repository
      * @throws UnexpectedValueException
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
@@ -26,11 +27,11 @@ class ZendDbRepositoryFactory implements RepositoryFactoryInterface
         /** @var MasterSlavesAdapterInterface $dbAdapter */
         $dbAdapter = $serviceLocator->get('Zend\Db\Adapter\Adapter');
 
-        /** @var ZendDbRepository $repository */
-        $repositoryClass = $this->get('repository_class', 'GtnPersistZendDb\Infrastructure\ZendDbRepository');
+        /** @var \GtnPersistZendDb\Infrastructure\ZendDb\Repository $repository */
+        $repositoryClass = $this->get('repository_class', 'GtnPersistZendDb\Infrastructure\ZendDb\Repository');
         $repository = new $repositoryClass($dbAdapter);
-        if (!$repository instanceof ZendDbRepository) {
-            throw new UnexpectedValueException("$repositoryClass: repository_class must extend GtnPersistZendDb\\Infrastructure\\ZendDbRepository");
+        if (!$repository instanceof Repository) {
+            throw new UnexpectedValueException("$repositoryClass: repository_class must extend GtnPersistZendDb\\Infrastructure\\ZendDb\\Repository");
         }
 
         $repository->setConfig($this->getConfig());

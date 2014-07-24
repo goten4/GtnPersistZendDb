@@ -1,12 +1,12 @@
 <?php
-namespace GtnPersistZendDbTest\Infrastructure;
+namespace GtnPersistZendDbTest\Infrastructure\ZendDb;
 
 use GtnPersistBase\Model\RepositoryInterface;
 use GtnPersistZendDbTest\Bootstrap;
 use GtnPersistZendDbTest\Model\Company;
 use Zend\Db\Adapter\AdapterInterface;
 
-class ZendDbRepositoryTest extends \PHPUnit_Extensions_Database_TestCase
+class RepositoryTest extends \PHPUnit_Extensions_Database_TestCase
 {
     /**
      * @var \PDO

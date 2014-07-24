@@ -48,16 +48,16 @@ return array(
 //
 //            /**
 //             * The factory that will instanciate the repository, should extend
-//             * GtnPersistZendDb\Service\ZendDbRepositoryFactory or at least implement
+//             * GtnPersistZendDb\Infrastructure\ZendDb\RepositoryFactory or at least implement
 //             * GtnPersistZendDb\Service\RepositoryFactoryInterface.
-//             * This is optional, default is 'GtnPersistZendDb\Service\ZendDbRepositoryFactory'.
+//             * This is optional, default is 'GtnPersistZendDb\Infrastructure\ZendDb\RepositoryFactory'.
 //             */
 //            'factory' => 'My\Infrastructure\ZendDb\UserRepositoryFactory',
 //
 //            /**
 //             * The factory that will instanciate the repository, must extend
-//             * GtnPersistZendDb\Infrastructure\ZendDbRepository.
-//             * This is optional, default is 'GtnPersistZendDb\Infrastructure\ZendDbRepository'.
+//             * GtnPersistZendDb\Infrastructure\ZendDb\Repository.
+//             * This is optional, default is 'GtnPersistZendDb\Infrastructure\ZendDb\Repository'.
 //             */
 //            'repository_class' => 'My\Infrastructure\ZendDb\UserRepository',
 //        )

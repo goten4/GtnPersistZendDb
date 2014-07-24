@@ -1,11 +1,11 @@
 <?php
-namespace GtnPersistZendDbTest\Infrastructure;
+namespace GtnPersistZendDbTest\Infrastructure\ZendDb;
 
-use GtnPersistZendDb\Infrastructure\ZendDbRepository;
+use GtnPersistZendDb\Infrastructure\ZendDb\Repository;
 use GtnPersistZendDbTest\Model\CompanyInterface;
 use GtnPersistZendDbTest\Model\UserRepositoryInterface;
 
-class ZendDbUserRepository extends ZendDbRepository implements UserRepositoryInterface
+class UserRepository extends Repository implements UserRepositoryInterface
 {
     /**
      * @param CompanyInterface $company

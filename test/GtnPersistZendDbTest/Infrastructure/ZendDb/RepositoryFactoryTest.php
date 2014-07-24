@@ -1,19 +1,20 @@
 <?php
-namespace GtnPersistZendDbTest\Service;
+namespace GtnPersistZendDbTest\Infrastructure\ZendDb;
 
-use GtnPersistZendDb\Service\ZendDbRepositoryFactory;
+use GtnPersistZendDb\Infrastructure\ZendDb\RepositoryFactory;
 use GtnPersistZendDbTest\Bootstrap;
+use GtnPersistZendDbTest\Service\CompanyProxyFactory;
 
-class ZendDbRepositoryFactoryTest extends \PHPUnit_Framework_TestCase
+class RepositoryFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var ZendDbRepositoryFactory
+     * @var RepositoryFactory
      */
     protected $factory;
 
     protected function setUp()
     {
-        $this->factory = new ZendDbRepositoryFactory();
+        $this->factory = new RepositoryFactory();
     }
 
     /** @test */
@@ -27,7 +28,7 @@ class ZendDbRepositoryFactoryTest extends \PHPUnit_Framework_TestCase
 
         $repository = $this->factory->createService(Bootstrap::getServiceManager());
 
-        $this->assertInstanceOf('GtnPersistZendDb\Infrastructure\ZendDbRepository', $repository);
+        $this->assertInstanceOf('GtnPersistZendDb\Infrastructure\ZendDb\Repository', $repository);
         $this->assertEquals($config, $repository->getConfig());
         $this->assertEquals('companies', $repository->getTableName());
         $this->assertEquals('id', $repository->getTableId());
@@ -47,7 +48,7 @@ class ZendDbRepositoryFactoryTest extends \PHPUnit_Framework_TestCase
 
         $repository = $this->factory->createService(Bootstrap::getServiceManager());
 
-        $this->assertInstanceOf('GtnPersistZendDb\Infrastructure\ZendDbRepository', $repository);
+        $this->assertInstanceOf('GtnPersistZendDb\Infrastructure\ZendDb\Repository', $repository);
         /** @var CompanyProxyFactory $proxyFactory */
         $proxyFactory = $repository->getAggregateRootProxyFactory();
         $this->assertInstanceOf('GtnPersistZendDbTest\Service\CompanyProxyFactory', $proxyFactory);
@@ -79,31 +80,31 @@ class ZendDbRepositoryFactoryTest extends \PHPUnit_Framework_TestCase
             'table_id' => 'user_id',
             'table_sequence_name' => 'user_seq',
             'aggregate_root_class' => 'GtnPersistZendDbTest\Model\User',
-            'aggregate_root_hydrator_class' => 'GtnPersistZendDbTest\Infrastructure\UserHydrator',
-            'repository_class' => 'GtnPersistZendDbTest\Infrastructure\ZendDbUserRepository',
+            'aggregate_root_hydrator_class' => 'GtnPersistZendDbTest\Infrastructure\ZendDb\UserHydrator',
+            'repository_class' => 'GtnPersistZendDbTest\Infrastructure\ZendDb\UserRepository',
         ));
 
         $repository = $this->factory->createService(Bootstrap::getServiceManager());
 
-        $this->assertInstanceOf('GtnPersistZendDbTest\Infrastructure\ZendDbUserRepository', $repository);
+        $this->assertInstanceOf('GtnPersistZendDbTest\Infrastructure\ZendDb\UserRepository', $repository);
         $this->assertEquals('users', $repository->getTableName());
         $this->assertEquals('user_id', $repository->getTableId());
         $this->assertEquals('user_seq', $repository->getTableSequenceName());
         $this->assertEquals('GtnPersistZendDbTest\Model\User', $repository->getAggregateRootClass());
-        $this->assertInstanceOf('GtnPersistZendDbTest\Infrastructure\UserHydrator', $repository->getAggregateRootHydrator());
+        $this->assertInstanceOf('GtnPersistZendDbTest\Infrastructure\ZendDb\UserHydrator', $repository->getAggregateRootHydrator());
     }
 
     /**
      * @test
      * @expectedException \GtnPersistZendDb\Exception\UnexpectedValueException
-     * @expectedExceptionMessage GtnPersistZendDbTest\Infrastructure\ZendDbInvalidRepository: repository_class must extend GtnPersistZendDb\Infrastructure\ZendDbRepository
+     * @expectedExceptionMessage GtnPersistZendDbTest\Infrastructure\ZendDb\InvalidRepository: repository_class must extend GtnPersistZendDb\Infrastructure\ZendDb\Repository
      */
     public function cannotCreateCustomRepositoryWithInvalidRepositoryClass()
     {
         $this->factory->setConfig(array(
             'table_name' => 'users',
             'aggregate_root_class' => 'GtnPersistZendDbTest\Model\User',
-            'repository_class' => 'GtnPersistZendDbTest\Infrastructure\ZendDbInvalidRepository',
+            'repository_class' => 'GtnPersistZendDbTest\Infrastructure\ZendDb\InvalidRepository',
         ));
 
         $this->factory->createService(Bootstrap::getServiceManager());
@@ -140,14 +141,14 @@ class ZendDbRepositoryFactoryTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      * @expectedException \GtnPersistZendDb\Exception\UnexpectedValueException
-     * @expectedExceptionMessage GtnPersistZendDbTest\Infrastructure\InvalidHydrator: aggregate_root_hydrator_class must implement Zend\Stdlib\Hydrator\HydratorInterface
+     * @expectedExceptionMessage GtnPersistZendDbTest\Infrastructure\ZendDb\InvalidHydrator: aggregate_root_hydrator_class must implement Zend\Stdlib\Hydrator\HydratorInterface
      */
     public function cannotCreateCustomRepositoryWithInvalidHydratorClass()
     {
         $this->factory->setConfig(array(
             'table_name' => 'users',
             'aggregate_root_class' => 'GtnPersistZendDbTest\Model\User',
-            'aggregate_root_hydrator_class' => 'GtnPersistZendDbTest\Infrastructure\InvalidHydrator',
+            'aggregate_root_hydrator_class' => 'GtnPersistZendDbTest\Infrastructure\ZendDb\InvalidHydrator',
         ));
 
         $this->factory->createService(Bootstrap::getServiceManager());

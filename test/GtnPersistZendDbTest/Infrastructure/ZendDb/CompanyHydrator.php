@@ -1,9 +1,9 @@
 <?php
-namespace GtnPersistZendDbTest\Infrastructure;
+namespace GtnPersistZendDbTest\Infrastructure\ZendDb;
 
 use Zend\Stdlib\Hydrator\HydratorInterface;
 
-class UserHydrator implements HydratorInterface
+class CompanyHydrator implements HydratorInterface
 {
     /**
      * Extract values from an object
@@ -14,7 +14,7 @@ class UserHydrator implements HydratorInterface
     public function extract($object)
     {
         return array(
-            'user_id' => $object->getId(),
+            'id' => $object->getId(),
             'name' => $object->getName(),
         );
     }
@@ -28,7 +28,7 @@ class UserHydrator implements HydratorInterface
      */
     public function hydrate(array $data, $object)
     {
-        $object->setId($data['user_id']);
+        $object->setId($data['id']);
         $object->setName($data['name']);
         return $object;
     }

@@ -1,5 +1,5 @@
 <?php
-namespace GtnPersistZendDb\Infrastructure;
+namespace GtnPersistZendDb\Infrastructure\ZendDb;
 
 use GtnPersistBase\Model\AggregateRootInterface;
 use GtnPersistBase\Model\RepositoryInterface;
@@ -14,7 +14,7 @@ use Zend\Db\Sql\Select;
 use Zend\Db\Sql\Sql;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 
-class ZendDbRepository implements RepositoryInterface
+class Repository implements RepositoryInterface
 {
     /** @var MasterSlavesAdapterInterface */
     protected $dbAdapter;
@@ -158,7 +158,7 @@ class ZendDbRepository implements RepositoryInterface
 
     /**
      * @param MasterSlavesAdapterInterface $dbAdapter
-     * @return ZendDbRepository
+     * @return Repository
      */
     public function setDbAdapter(MasterSlavesAdapterInterface $dbAdapter)
     {
@@ -188,7 +188,7 @@ class ZendDbRepository implements RepositoryInterface
      * Set table name.
      *
      * @param string $tableName
-     * @return ZendDbRepository
+     * @return Repository
      */
     public function setTableName($tableName)
     {
@@ -210,7 +210,7 @@ class ZendDbRepository implements RepositoryInterface
      * Set table id.
      *
      * @param mixed $tableId
-     * @return ZendDbRepository
+     * @return Repository
      */
     public function setTableId($tableId)
     {
@@ -232,7 +232,7 @@ class ZendDbRepository implements RepositoryInterface
      * Set TableSequenceName.
      *
      * @param string $tableSequenceName
-     * @return ZendDbRepository
+     * @return Repository
      */
     public function setTableSequenceName($tableSequenceName)
     {
@@ -254,7 +254,7 @@ class ZendDbRepository implements RepositoryInterface
      * Set aggregate root class name.
      *
      * @param string $aggregateRootClass
-     * @return ZendDbRepository
+     * @return Repository
      */
     public function setAggregateRootClass($aggregateRootClass)
     {
@@ -276,7 +276,7 @@ class ZendDbRepository implements RepositoryInterface
      * Set AggregateRootProxyFactory.
      *
      * @param AggregateRootProxyFactoryInterface $aggregateRootProxyFactory
-     * @return ZendDbRepository
+     * @return Repository
      */
     public function setAggregateRootProxyFactory($aggregateRootProxyFactory)
     {
@@ -298,7 +298,7 @@ class ZendDbRepository implements RepositoryInterface
      * Set aggregate root hydrator.
      *
      * @param \Zend\Stdlib\Hydrator\HydratorInterface $aggregateRootHydrator
-     * @return ZendDbRepository
+     * @return Repository
      */
     public function setAggregateRootHydrator(HydratorInterface $aggregateRootHydrator)
     {
@@ -320,7 +320,7 @@ class ZendDbRepository implements RepositoryInterface
      * Set Config.
      *
      * @param array $config
-     * @return ZendDbRepository
+     * @return Repository
      */
     public function setConfig($config)
     {
@@ -404,7 +404,7 @@ class ZendDbRepository implements RepositoryInterface
 
     /**
      * @param $masterSql
-     * @return ZendDbRepository
+     * @return Repository
      */
     protected function setMasterSql($masterSql)
     {
@@ -422,7 +422,7 @@ class ZendDbRepository implements RepositoryInterface
 
     /**
      * @param $slaveSql
-     * @return ZendDbRepository
+     * @return Repository
      */
     protected function setSlaveSql($slaveSql)
     {

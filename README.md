@@ -21,9 +21,9 @@ Via composer or simply clone this project into your `./vendor/` directory and en
 Provided Classes and Interfaces
 -------------------------------
 
-* `GtnPersistZendDb\Infrastructure\ZendDbRepository` - Zend\Db Repository implementation.
-* `GtnPersistZendDb\Service\ZendDbRepositoryFactory` - Factory for creating ZendDbRepository
-* `GtnPersistZendDb\Service\ZendDbRepositoryAbstractFactory` - Abstract Factory for creating repositories
+* `GtnPersistZendDb\Infrastructure\ZendDb\Repository` - Zend\Db Repository implementation.
+* `GtnPersistZendDb\Infrastructure\ZendDb\RepositoryFactory` - Factory for creating ZendDb\Repository
+* `GtnPersistZendDb\Infrastructure\ZendDb\RepositoryAbstractFactory` - Abstract Factory for creating repositories
 
 ## See also
 

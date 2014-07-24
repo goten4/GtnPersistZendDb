@@ -1,18 +1,17 @@
 <?php
-namespace GtnPersistZendDbTest\Service;
+namespace GtnPersistZendDbTest\Infrastructure\ZendDb;
 
 use GtnPersistZendDb\Db\Adapter\MasterSlavesAdapter;
-use GtnPersistZendDb\Service\ZendDbRepositoryFactory;
-use GtnPersistZendDbTest\Infrastructure\ZendDbUserRepository;
+use GtnPersistZendDb\Infrastructure\ZendDb\RepositoryFactory;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class ZendDbUserRepositoryFactory extends ZendDbRepositoryFactory
+class UserRepositoryFactory extends RepositoryFactory
 {
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         /** @var MasterSlavesAdapter $dbAdapter */
         $dbAdapter = $serviceLocator->get('Zend\Db\Adapter\Adapter');
 
-        return new ZendDbUserRepository($dbAdapter);
+        return new UserRepository($dbAdapter);
     }
 }

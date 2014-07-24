@@ -1,22 +1,21 @@
 <?php
-namespace GtnPersistZendDbTest\Service;
+namespace GtnPersistZendDbTest\Infrastructure\ZendDb;
 
-use GtnPersistZendDb\Infrastructure\ZendDbRepository;
-use GtnPersistZendDb\Service\ZendDbRepositoryAbstractFactory;
+use GtnPersistZendDb\Infrastructure\ZendDb\RepositoryAbstractFactory;
 use GtnPersistZendDbTest\Bootstrap;
 use Zend\Mvc\Service\ServiceManagerConfig;
 use Zend\ServiceManager\ServiceManager;
 
-class ZendDbRepositoryAbstractFactoryTest extends \PHPUnit_Framework_TestCase
+class RepositoryAbstractFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var ZendDbRepositoryAbstractFactory
+     * @var \GtnPersistZendDb\Infrastructure\ZendDb\RepositoryAbstractFactory
      */
     protected $factory;
 
     protected function setUp()
     {
-        $this->factory = new ZendDbRepositoryAbstractFactory();
+        $this->factory = new RepositoryAbstractFactory();
     }
 
     /** @test */
@@ -72,19 +71,19 @@ class ZendDbRepositoryAbstractFactoryTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function createServiceShouldReturnZendDbRepositoryInstance()
     {
-        /** @var ZendDbRepository $repository */
+        /** @var \GtnPersistZendDb\Infrastructure\ZendDb\Repository $repository */
         $repository = $this->factory->createServiceWithName(Bootstrap::getServiceManager(), 'companyrepository', 'CompanyRepository');
 
-        $this->assertInstanceOf('GtnPersistZendDb\Infrastructure\ZendDbRepository', $repository);
+        $this->assertInstanceOf('GtnPersistZendDb\Infrastructure\ZendDb\Repository', $repository);
     }
 
     /** @test */
     public function canCreateServiceWithCustomConfig()
     {
-        /** @var ZendDbRepository $repository */
+        /** @var \GtnPersistZendDb\Infrastructure\ZendDb\Repository $repository */
         $repository = $this->factory->createServiceWithName(Bootstrap::getServiceManager(), 'userrepository', 'UserRepository');
 
-        $this->assertInstanceOf('GtnPersistZendDbTest\Infrastructure\ZendDbUserRepository', $repository);
+        $this->assertInstanceOf('GtnPersistZendDbTest\Infrastructure\ZendDb\UserRepository', $repository);
     }
 
     /**
@@ -98,7 +97,7 @@ class ZendDbRepositoryAbstractFactoryTest extends \PHPUnit_Framework_TestCase
                 'Zend\Db\Adapter\Adapter' => 'GtnPersistZendDb\Db\Adapter\MasterSlavesAdapterFactory',
             ),
             'abstract_factories' => array(
-                'GtnPersistZendDb\Service\ZendDbRepositoryAbstractFactory',
+                'GtnPersistZendDb\Infrastructure\ZendDb\RepositoryAbstractFactory',
             ),
         )));
         if ($config !== null) {
