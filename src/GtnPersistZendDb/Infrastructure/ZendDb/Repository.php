@@ -75,7 +75,7 @@ class Repository implements RepositoryInterface
     public function getById($id)
     {
         return $this->getBy(array(
-            $this->getTableId() => $id
+            $this->getTableName() . '.' . $this->getTableId() => $id
         ));
     }
 
